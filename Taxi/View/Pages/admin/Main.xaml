@@ -1,0 +1,43 @@
+﻿<Page x:Class="Taxi.View.Pages.admin.Main"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Taxi.View.Pages.operatorv"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Main">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer>
+            <StackPanel>
+                <Button Click="GoToCars">
+                    Список автомобилей
+                </Button>
+                <Button Click="GoToUserList">
+                    Список операторов
+                </Button>
+                <Button Click="GoToCarsDriver">
+                    Присвоение автомобиля
+                </Button>
+                <Button Click="GoToDrivers">
+                    Список водителей
+                </Button>
+                <Button Click="GoToTickets">
+                    Список заказов
+                </Button>
+                <Button Click="GoToSettings">
+                    настройки
+                </Button>
+                <Button Click="Exit">
+                    Выйти
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+        <Frame Grid.Column="1" x:Name="FrameOperator" NavigationUIVisibility="Hidden" Navigated="ShowTitle"/>
+    </Grid>
+</Page>

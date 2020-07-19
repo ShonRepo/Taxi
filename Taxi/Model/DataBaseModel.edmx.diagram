@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e6e0656c377549659cf0437de61df678" Name="Diagram1">
+        <EntityTypeShape EntityType="taxiModel.brand" Width="1.5" PointX="5.75" PointY="6.375" />
+        <EntityTypeShape EntityType="taxiModel.car" Width="1.5" PointX="10.25" PointY="6" />
+        <EntityTypeShape EntityType="taxiModel.driver" Width="1.5" PointX="3" PointY="6.5" />
+        <EntityTypeShape EntityType="taxiModel.driverCar" Width="1.5" PointX="12.5" PointY="6.625" />
+        <EntityTypeShape EntityType="taxiModel.gender" Width="1.5" PointX="0.75" PointY="7.125" />
+        <EntityTypeShape EntityType="taxiModel.model" Width="1.5" PointX="8" PointY="6.125" />
+        <EntityTypeShape EntityType="taxiModel.role" Width="1.5" PointX="0.75" PointY="2" />
+        <EntityTypeShape EntityType="taxiModel.status" Width="1.5" PointX="3" PointY="10.125" />
+        <EntityTypeShape EntityType="taxiModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="taxiModel.ticket" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="taxiModel.user" Width="1.5" PointX="3" PointY="1.5" />
+        <AssociationConnector Association="taxiModel.FK_model_brand" />
+        <AssociationConnector Association="taxiModel.FK_car_model" />
+        <AssociationConnector Association="taxiModel.FK_driverCar_car" />
+        <AssociationConnector Association="taxiModel.FK_driver_gender" />
+        <AssociationConnector Association="taxiModel.FK_driverCar_driver" />
+        <AssociationConnector Association="taxiModel.FK_ticket_driver" />
+        <AssociationConnector Association="taxiModel.FK_user_role" />
+        <AssociationConnector Association="taxiModel.FK_ticket_status" />
+        <AssociationConnector Association="taxiModel.FK_ticket_user" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

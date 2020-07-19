@@ -1,0 +1,42 @@
+﻿<Page x:Class="Taxi.View.Pages.admin.AddOrUpdateDriver"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Taxi.View.Pages.admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddOrUpdateDriver">
+
+    <ScrollViewer>
+        <StackPanel>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">Заказы</Label>
+            <GroupBox Header="Фамилия">
+                <TextBox x:Name="Last"></TextBox>
+            </GroupBox>
+            <GroupBox Header="Имя">
+                <TextBox x:Name="First"></TextBox>
+            </GroupBox>
+            <GroupBox Header="Email">
+                <TextBox x:Name="Email"></TextBox>
+            </GroupBox>
+            <GroupBox Header="Телефон">
+                <TextBox x:Name="Phone"></TextBox>
+            </GroupBox>
+            <GroupBox Header="Дата рождения">
+                <DatePicker x:Name="Date"></DatePicker>
+            </GroupBox>
+            <GroupBox Header="Пол">
+                <ComboBox x:Name="Gender" DisplayMemberPath="name"></ComboBox>
+            </GroupBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Click="Save">Сохранить</Button>
+                <Button Grid.Column="1" Click="Cancel">Отмента</Button>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

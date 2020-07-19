@@ -1,0 +1,41 @@
+﻿<Page x:Class="Taxi.View.Pages.admin.Drivers"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Taxi.View.Pages.admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Drivers">
+
+    <DockPanel>
+        <StackPanel>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">Водители</Label>
+            <Button Click="AddDriver">Добавить</Button>
+        </StackPanel>
+        <DataGrid x:Name="DriverList" IsReadOnly="True" AutoGenerateColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Фамилия" Width="*" Binding="{Binding lastName}"/>
+                <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding firstName}"/>
+                <DataGridTextColumn Header="Email" Width="*" Binding="{Binding email}"/>
+                <DataGridTextColumn Header="Телефон" Width="*" Binding="{Binding phone}"/>
+                <DataGridTextColumn Header="Дата рождения" Width="*" Binding="{Binding dateOfBbirth}"/>
+                <DataGridTextColumn Header="Пол" Width="*" Binding="{Binding gender1.name}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="UpdateDriver">Изменить</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="DeleteDriver">Удалить</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Page>

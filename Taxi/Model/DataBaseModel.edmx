@@ -1,0 +1,690 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="taxiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="brand">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="car">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="model" Type="bigint" Nullable="false" />
+          <Property Name="number" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="vin" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="driver">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="dateOfBirth" Type="date" Nullable="false" />
+          <Property Name="gender" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="driverCar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="car" Type="bigint" />
+          <Property Name="driver" Type="bigint" />
+        </EntityType>
+        <EntityType Name="gender">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="model">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="brand" Type="bigint" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="startStreet" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="endStreet" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="startHouse" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="endHouse" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="driver" Type="bigint" Nullable="false" />
+          <Property Name="user" Type="bigint" />
+          <Property Name="status" Type="bigint" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="role" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_car_model">
+          <End Role="model" Type="Self.model" Multiplicity="1" />
+          <End Role="car" Type="Self.car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="model">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="car">
+              <PropertyRef Name="model" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_driver_gender">
+          <End Role="gender" Type="Self.gender" Multiplicity="1" />
+          <End Role="driver" Type="Self.driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gender">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="driver">
+              <PropertyRef Name="gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_driverCar_car">
+          <End Role="car" Type="Self.car" Multiplicity="0..1" />
+          <End Role="driverCar" Type="Self.driverCar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="car">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="driverCar">
+              <PropertyRef Name="car" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_driverCar_driver">
+          <End Role="driver" Type="Self.driver" Multiplicity="0..1" />
+          <End Role="driverCar" Type="Self.driverCar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="driver">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="driverCar">
+              <PropertyRef Name="driver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_model_brand">
+          <End Role="brand" Type="Self.brand" Multiplicity="1" />
+          <End Role="model" Type="Self.model" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brand">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="model">
+              <PropertyRef Name="brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ticket_driver">
+          <End Role="driver" Type="Self.driver" Multiplicity="1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="driver">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="driver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ticket_status">
+          <End Role="status" Type="Self.status" Multiplicity="0..1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ticket_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="taxiModelStoreContainer">
+          <EntitySet Name="brand" EntityType="Self.brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="car" EntityType="Self.car" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="driver" EntityType="Self.driver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="driverCar" EntityType="Self.driverCar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="gender" EntityType="Self.gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="model" EntityType="Self.model" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_car_model" Association="Self.FK_car_model">
+            <End Role="model" EntitySet="model" />
+            <End Role="car" EntitySet="car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_driver_gender" Association="Self.FK_driver_gender">
+            <End Role="gender" EntitySet="gender" />
+            <End Role="driver" EntitySet="driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_driverCar_car" Association="Self.FK_driverCar_car">
+            <End Role="car" EntitySet="car" />
+            <End Role="driverCar" EntitySet="driverCar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_driverCar_driver" Association="Self.FK_driverCar_driver">
+            <End Role="driver" EntitySet="driver" />
+            <End Role="driverCar" EntitySet="driverCar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_model_brand" Association="Self.FK_model_brand">
+            <End Role="brand" EntitySet="brand" />
+            <End Role="model" EntitySet="model" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ticket_driver" Association="Self.FK_ticket_driver">
+            <End Role="driver" EntitySet="driver" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ticket_status" Association="Self.FK_ticket_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ticket_user" Association="Self.FK_ticket_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="taxiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="taxiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="brand" EntityType="taxiModel.brand" />
+          <EntitySet Name="car" EntityType="taxiModel.car" />
+          <EntitySet Name="driver" EntityType="taxiModel.driver" />
+          <EntitySet Name="driverCar" EntityType="taxiModel.driverCar" />
+          <EntitySet Name="gender" EntityType="taxiModel.gender" />
+          <EntitySet Name="model" EntityType="taxiModel.model" />
+          <EntitySet Name="role" EntityType="taxiModel.role" />
+          <EntitySet Name="status" EntityType="taxiModel.status" />
+          <EntitySet Name="sysdiagrams" EntityType="taxiModel.sysdiagrams" />
+          <EntitySet Name="ticket" EntityType="taxiModel.ticket" />
+          <EntitySet Name="user" EntityType="taxiModel.user" />
+          <AssociationSet Name="FK_model_brand" Association="taxiModel.FK_model_brand">
+            <End Role="brand" EntitySet="brand" />
+            <End Role="model" EntitySet="model" />
+          </AssociationSet>
+          <AssociationSet Name="FK_car_model" Association="taxiModel.FK_car_model">
+            <End Role="model" EntitySet="model" />
+            <End Role="car" EntitySet="car" />
+          </AssociationSet>
+          <AssociationSet Name="FK_driverCar_car" Association="taxiModel.FK_driverCar_car">
+            <End Role="car" EntitySet="car" />
+            <End Role="driverCar" EntitySet="driverCar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_driver_gender" Association="taxiModel.FK_driver_gender">
+            <End Role="gender" EntitySet="gender" />
+            <End Role="driver" EntitySet="driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_driverCar_driver" Association="taxiModel.FK_driverCar_driver">
+            <End Role="driver" EntitySet="driver" />
+            <End Role="driverCar" EntitySet="driverCar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ticket_driver" Association="taxiModel.FK_ticket_driver">
+            <End Role="driver" EntitySet="driver" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="taxiModel.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ticket_status" Association="taxiModel.FK_ticket_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ticket_user" Association="taxiModel.FK_ticket_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="brand">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="model" Relationship="taxiModel.FK_model_brand" FromRole="brand" ToRole="model" />
+        </EntityType>
+        <EntityType Name="car">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="model" Type="Int64" Nullable="false" />
+          <Property Name="number" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="vin" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="model1" Relationship="taxiModel.FK_car_model" FromRole="car" ToRole="model" />
+          <NavigationProperty Name="driverCar" Relationship="taxiModel.FK_driverCar_car" FromRole="car" ToRole="driverCar" />
+        </EntityType>
+        <EntityType Name="driver">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="dateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="gender" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="gender1" Relationship="taxiModel.FK_driver_gender" FromRole="driver" ToRole="gender" />
+          <NavigationProperty Name="driverCar" Relationship="taxiModel.FK_driverCar_driver" FromRole="driver" ToRole="driverCar" />
+          <NavigationProperty Name="ticket" Relationship="taxiModel.FK_ticket_driver" FromRole="driver" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="driverCar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="car" Type="Int64" />
+          <Property Name="driver" Type="Int64" />
+          <NavigationProperty Name="car1" Relationship="taxiModel.FK_driverCar_car" FromRole="driverCar" ToRole="car" />
+          <NavigationProperty Name="driver1" Relationship="taxiModel.FK_driverCar_driver" FromRole="driverCar" ToRole="driver" />
+        </EntityType>
+        <EntityType Name="gender">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="driver" Relationship="taxiModel.FK_driver_gender" FromRole="gender" ToRole="driver" />
+        </EntityType>
+        <EntityType Name="model">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="brand" Type="Int64" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="brand1" Relationship="taxiModel.FK_model_brand" FromRole="model" ToRole="brand" />
+          <NavigationProperty Name="car" Relationship="taxiModel.FK_car_model" FromRole="model" ToRole="car" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="taxiModel.FK_user_role" FromRole="role" ToRole="user" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ticket" Relationship="taxiModel.FK_ticket_status" FromRole="status" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="startStreet" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="endStreet" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="startHouse" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="endHouse" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="driver" Type="Int64" Nullable="false" />
+          <Property Name="user" Type="Int64" />
+          <Property Name="status" Type="Int64" />
+          <NavigationProperty Name="driver1" Relationship="taxiModel.FK_ticket_driver" FromRole="ticket" ToRole="driver" />
+          <NavigationProperty Name="status1" Relationship="taxiModel.FK_ticket_status" FromRole="ticket" ToRole="status" />
+          <NavigationProperty Name="user1" Relationship="taxiModel.FK_ticket_user" FromRole="ticket" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="role" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="role1" Relationship="taxiModel.FK_user_role" FromRole="user" ToRole="role" />
+          <NavigationProperty Name="ticket" Relationship="taxiModel.FK_ticket_user" FromRole="user" ToRole="ticket" />
+        </EntityType>
+        <Association Name="FK_model_brand">
+          <End Type="taxiModel.brand" Role="brand" Multiplicity="1" />
+          <End Type="taxiModel.model" Role="model" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brand">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="model">
+              <PropertyRef Name="brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_car_model">
+          <End Type="taxiModel.model" Role="model" Multiplicity="1" />
+          <End Type="taxiModel.car" Role="car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="model">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="car">
+              <PropertyRef Name="model" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_driverCar_car">
+          <End Type="taxiModel.car" Role="car" Multiplicity="0..1" />
+          <End Type="taxiModel.driverCar" Role="driverCar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="car">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="driverCar">
+              <PropertyRef Name="car" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_driver_gender">
+          <End Type="taxiModel.gender" Role="gender" Multiplicity="1" />
+          <End Type="taxiModel.driver" Role="driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gender">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="driver">
+              <PropertyRef Name="gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_driverCar_driver">
+          <End Type="taxiModel.driver" Role="driver" Multiplicity="0..1" />
+          <End Type="taxiModel.driverCar" Role="driverCar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="driver">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="driverCar">
+              <PropertyRef Name="driver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ticket_driver">
+          <End Type="taxiModel.driver" Role="driver" Multiplicity="1" />
+          <End Type="taxiModel.ticket" Role="ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="driver">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="driver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Type="taxiModel.role" Role="role" Multiplicity="1" />
+          <End Type="taxiModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ticket_status">
+          <End Type="taxiModel.status" Role="status" Multiplicity="0..1" />
+          <End Type="taxiModel.ticket" Role="ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ticket_user">
+          <End Type="taxiModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="taxiModel.ticket" Role="ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="taxiModelStoreContainer" CdmEntityContainer="taxiEntities">
+          <EntitySetMapping Name="brand">
+            <EntityTypeMapping TypeName="taxiModel.brand">
+              <MappingFragment StoreEntitySet="brand">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="car">
+            <EntityTypeMapping TypeName="taxiModel.car">
+              <MappingFragment StoreEntitySet="car">
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="vin" ColumnName="vin" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="driver">
+            <EntityTypeMapping TypeName="taxiModel.driver">
+              <MappingFragment StoreEntitySet="driver">
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="driverCar">
+            <EntityTypeMapping TypeName="taxiModel.driverCar">
+              <MappingFragment StoreEntitySet="driverCar">
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="car" ColumnName="car" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gender">
+            <EntityTypeMapping TypeName="taxiModel.gender">
+              <MappingFragment StoreEntitySet="gender">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="model">
+            <EntityTypeMapping TypeName="taxiModel.model">
+              <MappingFragment StoreEntitySet="model">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="brand" ColumnName="brand" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="taxiModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="taxiModel.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="taxiModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ticket">
+            <EntityTypeMapping TypeName="taxiModel.ticket">
+              <MappingFragment StoreEntitySet="ticket">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="endHouse" ColumnName="endHouse" />
+                <ScalarProperty Name="startHouse" ColumnName="startHouse" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="endStreet" ColumnName="endStreet" />
+                <ScalarProperty Name="startStreet" ColumnName="startStreet" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="taxiModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

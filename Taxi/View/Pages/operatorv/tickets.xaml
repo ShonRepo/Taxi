@@ -1,0 +1,59 @@
+﻿<Page x:Class="Taxi.View.Pages.operatorv.Tickets"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Taxi.View.Pages.operatorv"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="tickets">
+
+    <DockPanel>
+       
+        <ScrollViewer>
+        <StackPanel>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold">Тикеты</Label>
+                <ListBox x:Name="sort">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                        <CheckBox IsChecked="{Binding Check}" Content="{Binding Status.name}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Click="Search">Найти</Button>
+            </StackPanel>
+        </ScrollViewer>
+        <ListBox Grid.Row="1" x:Name="ticketList" SelectionChanged="SelectTicket">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <materialDesign:Card Width="150">
+                        <StackPanel>
+                            <Image Source="{Binding Car.photo}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock TextWrapping="Wrap" Text="Из: "></TextBlock>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Ticket. startStreet}"></TextBlock>
+
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Ticket. startHouse}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock TextWrapping="Wrap" Text="в: "></TextBlock>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Ticket. endStreet}"></TextBlock>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Ticket. endHouse}"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Статус: "/>
+                                <TextBlock Text="{Binding Ticket.status1.name}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</Page>

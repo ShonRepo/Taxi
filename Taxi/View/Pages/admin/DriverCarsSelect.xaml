@@ -1,0 +1,41 @@
+﻿<Page x:Class="Taxi.View.Pages.admin.DriverCarsSelect"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Taxi.View.Pages.admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DriverCarsSelect">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <GroupBox Header="Пользователь">
+                <ComboBox Name="Driver" DisplayMemberPath="lastName"></ComboBox>
+            </GroupBox>
+            <ListBox x:Name="CarsDriver" DisplayMemberPath="Name">
+                
+            </ListBox>
+        </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button VerticalAlignment="Bottom" Content="Добавить" Click="AddCarDriver"/>
+            <Button VerticalAlignment="Top" Grid.Row="1" Click="DeleteCar">Убрать</Button>
+        </Grid>
+        <StackPanel Grid.Column="2">
+            <GroupBox Header="Все машины">
+                <ListBox x:Name="AllCars" DisplayMemberPath="Name">
+                    
+                </ListBox>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Page>
